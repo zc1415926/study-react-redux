@@ -22,6 +22,17 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
                 <CounterControl label="Add 5" clicked={this.props.onAddCounter}  />
                 <CounterControl label="Subtract 5" clicked={this.props.onSubstractCounter}  />
+
+                <hr />
+                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <ul>
+                    {/* strResult=>接{}需要在{}里使用return，接()表示()中的内容即是return的内容 */}
+                    {this.props.storedResults.map(strResult=>(
+                        /* ()=>this.props.onDeleteResult(strResult.id)的第一个括号不用传入参数，这是这部分代码
+                        是在map函数中，strResult依然有效，所以就在第二个括号里传入strResult.id就行了 */
+                        <li key={strResult.id} onClick={()=>this.props.onDeleteResult(strResult.id)}>{strResult.value}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
@@ -31,7 +42,8 @@ class Counter extends Component {
 //并把this.state.counter转换为this.props.ctr，供用户使用
 const mapStateToProps=(state)=>{
     return {
-        ctr: state.counter
+        ctr: state.counter,
+        storedResults: state.results
     };
 };
 //在mapDispatchToProps中定义发送写数据的命令（action）的函数
@@ -42,7 +54,10 @@ const mapDispatchToProps=(dispatch)=>{
         onDecrementCounter: ()=>dispatch({type: actionTypes.DECREMENT}),
         //在发送的action中加入payload，即带上数据
         onAddCounter: ()=>dispatch({type: actionTypes.ADD, val: 5}),
-        onSubstractCounter: ()=>dispatch({type: actionTypes.SUBSTRACT, val: 8})
+        onSubstractCounter: ()=>dispatch({type: actionTypes.SUBSTRACT, val: 8}),
+        onStoreResult: ()=>dispatch({type: actionTypes.STORE_RESULT}),
+        //这里的id是调用onDeleteResult时传入的参数
+        onDeleteResult: (id)=>dispatch({type: actionTypes.DELETE_RESULT, resultElId: id})
     };
 }
 //使用connect连接React和Redux传入读数据和写数据的函数
