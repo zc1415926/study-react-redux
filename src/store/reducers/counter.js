@@ -1,9 +1,8 @@
-import * as actionTypes from './actions';
+import * as actionTypes from '../actions';
 
 //初始数据
 const initialState = {
-    counter:0,
-    results: []
+    counter: 0
 }
 //数据处理器
 const reducer = (state=initialState, action)=>{
@@ -32,25 +31,6 @@ const reducer = (state=initialState, action)=>{
             return{
                 ...state,
                 counter: state.counter - action.val
-            }
-        case actionTypes.STORE_RESULT:
-            return{
-                //immutable:使用...state将state中的原有数据读出，与新的results合并
-                ...state,
-                //immutalbe:不能使用state.results.push()，因为push会改变原数组，
-                //而concat()是连接后返回新数组
-                results: state.results.concat({id: new Date(), value: state.counter})
-            }
-        case actionTypes.DELETE_RESULT:
-            // const id = 2;
-            // const newArray = [...state.results];
-            // newArray.splice(id, 1)
-
-            //在回调函数中将id不符合的项返回给updatedArray，符合的项漏掉，就做出了删除的效果
-            const updatedArray = state.results.filter(results => results.id !== action.resultElId);
-            return{
-                ...state,
-                results: updatedArray
             }
     }
 

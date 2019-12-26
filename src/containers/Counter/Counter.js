@@ -24,7 +24,8 @@ class Counter extends Component {
                 <CounterControl label="Subtract 5" clicked={this.props.onSubstractCounter}  />
 
                 <hr />
-                <button onClick={this.props.onStoreResult}>Store Result</button>
+                {/* 通过参数传递要保存的值 */}
+                <button onClick={()=>this.props.onStoreResult(this.props.ctr)}>Store Result</button>
                 <ul>
                     {/* strResult=>接{}需要在{}里使用return，接()表示()中的内容即是return的内容 */}
                     {this.props.storedResults.map(strResult=>(
@@ -40,10 +41,11 @@ class Counter extends Component {
 
 //使用mapStateToProps方法，redux可以读取数据
 //并把this.state.counter转换为this.props.ctr，供用户使用
+//拆分reducer后，要使用设定好的ctr和res调用不同的reducer
 const mapStateToProps=(state)=>{
     return {
-        ctr: state.counter,
-        storedResults: state.results
+        ctr: state.ctr.counter,
+        storedResults: state.res.results
     };
 };
 //在mapDispatchToProps中定义发送写数据的命令（action）的函数
@@ -55,7 +57,8 @@ const mapDispatchToProps=(dispatch)=>{
         //在发送的action中加入payload，即带上数据
         onAddCounter: ()=>dispatch({type: actionTypes.ADD, val: 5}),
         onSubstractCounter: ()=>dispatch({type: actionTypes.SUBSTRACT, val: 8}),
-        onStoreResult: ()=>dispatch({type: actionTypes.STORE_RESULT}),
+        //使用payload向reducer传递要保存的值
+        onStoreResult: (result)=>dispatch({type: actionTypes.STORE_RESULT, result: result}),
         //这里的id是调用onDeleteResult时传入的参数
         onDeleteResult: (id)=>dispatch({type: actionTypes.DELETE_RESULT, resultElId: id})
     };
