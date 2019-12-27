@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 //引入actionTypes更方便、精确地表示action.type
 //import * as actionTypes from '../../store/actions/actions';
-//引入actionCreators
-import * as actionCreators  from '../../store/actions/actions';
+//引入actionCreators（拆分后）
+import * as actionCreators  from '../../store/actions/index';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';

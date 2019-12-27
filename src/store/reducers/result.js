@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actions';
+import * as actionTypes from '../actions/actionTypes';
 
 //初始数据
 const initialState = {
