@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import {updateObject} from '../utility';
 
 //初始数据
 const initialState = {
@@ -28,10 +29,7 @@ const reducer = (state=initialState, action)=>{
                 counter: state.counter + action.val
             }
         case actionTypes.SUBSTRACT:
-            return{
-                ...state,
-                counter: state.counter - action.val
-            }
+            return updateObject(state, {counter: state.counter - action.val});
     }
 
     //固定写法
