@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 //引入react和redux的连接方法connect
 import {connect} from 'react-redux';
 //引入actionTypes更方便、精确地表示action.type
-import * as actionTypes from '../../store/actions';
+//import * as actionTypes from '../../store/actions/actions';
+//引入actionCreators
+import * as actionCreators  from '../../store/actions/actions';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -52,15 +54,16 @@ const mapStateToProps=(state)=>{
 //定义的函数放在this.props里，供用户调用
 const mapDispatchToProps=(dispatch)=>{
     return {
-        onIncrementCounter: ()=>dispatch({type: actionTypes.INCREMENT}),
-        onDecrementCounter: ()=>dispatch({type: actionTypes.DECREMENT}),
+        //修改成使用actionCreators的形式
+        onIncrementCounter: ()=>dispatch(actionCreators.increment()),
+        onDecrementCounter: ()=>dispatch(actionCreators.decrement()),
         //在发送的action中加入payload，即带上数据
-        onAddCounter: ()=>dispatch({type: actionTypes.ADD, val: 5}),
-        onSubstractCounter: ()=>dispatch({type: actionTypes.SUBSTRACT, val: 8}),
+        onAddCounter: ()=>dispatch(actionCreators.add(5)),
+        onSubstractCounter: ()=>dispatch(actionCreators.substract(8)),
         //使用payload向reducer传递要保存的值
-        onStoreResult: (result)=>dispatch({type: actionTypes.STORE_RESULT, result: result}),
+        onStoreResult: (result)=>dispatch(actionCreators.storeResult(result)),
         //这里的id是调用onDeleteResult时传入的参数
-        onDeleteResult: (id)=>dispatch({type: actionTypes.DELETE_RESULT, resultElId: id})
+        onDeleteResult: (id)=>dispatch(actionCreators.deleteResult(id))
     };
 }
 //使用connect连接React和Redux传入读数据和写数据的函数
